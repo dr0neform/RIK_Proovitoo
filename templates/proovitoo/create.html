@@ -1,0 +1,159 @@
+{% extends "proovitoo/base.html" %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+
+<div class="detailheader">
+<h1>Uue äriühingu asutamine</h1>
+</div>
+<form action="/create/" method="post" id="form-container">
+    {% csrf_token %}
+<div class="newDetails">
+    <label for="reg_code">Registrikood: </label>
+    {{ form1.reg_code }}
+    <label for="name">Ärinimi: </label>
+    {{ form1.name }}
+    <label for="create_date">Kuupäev: </label>
+    {{ form1.create_date }}
+</div>
+
+<div class="details">
+<h3 class="p-3">Füüsilised osanikud:</h3>
+
+<div id="physical" hidden="True" value="0"></div>
+
+        {{formset_p.management_form}}
+        {% for form in formset_p %}
+            <div class="detail-form-p">
+                {{form.as_table}}
+            </div>
+
+
+
+        {% endfor %}
+</br>
+<button id="add-form_p" class="btn btn-dark" type="button">Lisa füüsiline isik</button>
+</div>
+
+<div class="details">
+<h3 class="p-3">Juriidilised osanikud:</h3>
+    <div id="juridical" hidden="True" value="0"></div>
+        {{formset_j.management_form}}
+
+        {% for form in formset_j %}
+            <div class="detail-form-j">
+            {{form.as_table}}
+            </div>
+
+        {% endfor %}
+
+</br>
+    <button id="add-form_j" class="btn btn-dark" type="button">Lisa juriidiline isik</button>
+
+</div>
+    <div class="p-4">
+        <input type="submit" id="submitButton" hidden = True>
+        <input class="btn btn-primary" style="width:100px"  type="button" onclick="validateCapital()" value="OK">
+        <a class="btn btn-secondary" style="width:100px" href="/index/">Avalehele</a>
+    </div>
+
+    </form>
+
+    {% load static %}
+    <script src="{% static 'js/split_search_result.js' %}"></script>
+    <script src="{% static 'js/hide_forms.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.js"></script>
+
+    <script>
+        $('.basicAutoComplete').autoComplete(
+            {minLength: 1}
+        );
+        $('.dropdown-menu').css({'top': 'auto', 'left': 'auto'})
+        console.log()
+    </script>
+
+    <script>
+        let addButton_p = document.querySelector("#add-form_p")
+        let totalForms = document.querySelector("#id_create_p-TOTAL_FORMS")
+
+        addButton_p.addEventListener('click', addForm_p)
+
+        function addForm_p(e){
+            let pf = parseInt(document.getElementById('physical').getAttribute('value'))
+            document.getElementsByClassName("detail-form-p")[pf].style.display = "block"
+            pf++
+            totalForms.setAttribute('value', pf.toString())
+            document.getElementById('physical').setAttribute('value', pf.toString())
+
+        }
+
+    </script>
+
+    <script>
+        let addButton_j = document.querySelector("#add-form_j")
+        let totalForms2 = document.querySelector("#id_create_j-TOTAL_FORMS")
+
+        addButton_j.addEventListener('click', addForm_j)
+
+        function addForm_j(e){
+            let jf = parseInt(document.getElementById('juridical').getAttribute('value'))
+            document.getElementsByClassName("detail-form-j")[jf].style.display = "block"
+            jf++
+            totalForms2.setAttribute('value', jf.toString())
+            document.getElementById('juridical').setAttribute('value', jf.toString())
+
+        }
+    </script>
+
+
+
+
+    <script>
+    function validateCapital() {
+        let capital_p = 0;
+        let capital_j = 0;
+
+        for (let i = 0; i < parseInt(document.getElementById('physical').getAttribute('value')); i++) {
+
+            capital_p += parseInt(document.getElementById('id_create_p-' + i + '-capital').value)
+        }
+
+        capital_p = capital_p || 0
+
+        for (let i = 0; i < parseInt(document.getElementById('juridical').getAttribute('value')); i++) {
+
+            capital_j += parseInt(document.getElementById('id_create_j-' + i + '-capital').value)
+        }
+
+        capital_j = capital_j || 0
+
+        let capital = capital_j + capital_p
+
+        if (capital < 2500) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Tähelepanu! Osakapital peab olema vähemalt 2500 EUR',
+                text: 'Puudu on ' + (2500 - capital).toString() + ' EUR'
+            })
+        } else {
+            try {
+            let p_forms = document.getElementsByClassName("detail-form-p")
+            p_forms = Array.from(p_forms);
+            for (let i = 0; i < 5; i++) {
+                if (p_forms[i].getAttribute('style') == "display: none;") {
+                    p_forms[i].remove()}
+            }
+
+            let j_forms = document.getElementsByClassName("detail-form-j")
+            j_forms = Array.from(j_forms);
+            for (let i = 0; i < 5; i++) {
+                if (j_forms[i].getAttribute('style') == "display: none;") {
+                    j_forms[i].remove()}
+            }}
+            catch {}
+            document.getElementById('submitButton').click();
+        }
+    }
+</script>
+{% endblock %}
