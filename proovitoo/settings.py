@@ -25,12 +25,15 @@ SECRET_KEY = 'django-insecure-t5a%p^0$hvge*o8ql#dq)q+jyn3*pv$-15&=a7lxf&*1)&=uzg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ec2-13-53-184-45.eu-north-1.compute.amazonaws.com']
 
 
 # Application definition
 
+
 INSTALLED_APPS = [
+    'dal',
+    'dal_select2',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'proovitoo',
+    'bootstrap4',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
