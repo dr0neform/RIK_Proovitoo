@@ -78,7 +78,9 @@ WSGI_APPLICATION = 'proovitoo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': BASE_DIR / 'proovitoodb',
+        'NAME': 'proovitoodb',
+        'USER': 'root',
+        'PASSWORD': 'SadaTuhat'
     }
 }
 
