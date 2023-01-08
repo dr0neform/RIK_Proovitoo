@@ -21,8 +21,7 @@
 
         <h3>Füüsilised osanikud:</h3>
 
-        {% if formset_update_p.total_form_count > 0 %}
-            
+        {% if formset_update_p.total_form_count > 0 %}           
             <table class="table table-bordered">
                 <tr>
                     <th>Isikukood</th>
@@ -31,8 +30,7 @@
                     <th>Osakapital</th>
                 </tr>
 
-                {% for form in formset_update_p %}
-        
+                {% for form in formset_update_p %}       
                     {{ form.id_code.as_hidden }}
                     {{ form.shareholder_first_name.as_hidden }}
                     {{ form.shareholder_last_name.as_hidden }}
@@ -44,8 +42,7 @@
                             <td>{{ form.id_code.value }}</td>
                             <td>{{ form.shareholder_first_name.value }}</td>
                             <td>{{ form.shareholder_last_name.value }}</td>
-                            <td>{{ form.capital }}</td>
-        
+                            <td>{{ form.capital }}</td>     
                         </tr>
                     </div>
                 {% endfor %}
@@ -93,10 +90,8 @@
                             <td>{{ form.capital }}</td>
                         </tr>
                     </div>
-                {% endfor %}
-    
-            </table>
-    
+                {% endfor %}    
+            </table>    
         {% endif %}
     
         <div class="row m-4"></div>
