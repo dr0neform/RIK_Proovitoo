@@ -60,20 +60,23 @@ detail_formset_create_physical_person = modelformset_factory(Detail,
                                                                       'founder': HiddenInput(),
                                                                       'physical_person': HiddenInput(),
                                                                       'id_code': TextInput(
-                                                                          attrs={'style': 'width: 300px',
-                                                                                 'class': 'basicAutoComplete',
-                                                                                 'data-url': '/id_code_autocomplete/',
-                                                                                 'required': 'true'
-                                                                                 }),
+                                                                          attrs={'style':'width:300px',
+                                                                              'class': 'basicAutoComplete m-1',
+                                                                              'data-url': '/id_code_autocomplete/',
+                                                                              'required': 'true'
+                                                                          }),
                                                                       'shareholder_first_name': TextInput(
                                                                           attrs={'required': 'true',
-                                                                                 'style': 'width: 250px'}),
+                                                                                 'class': 'm-1'
+                                                                                 }),
                                                                       'shareholder_last_name': TextInput(
                                                                           attrs={'required': 'true',
-                                                                                 'style': 'width: 250px'}),
+                                                                                 'class': 'm-1'
+                                                                                 }),
                                                                       'capital': NumberInput(attrs={
                                                                           'min': '1',
-                                                                          'style': 'width: 150px'
+                                                                          'class': 'm-1'
+
                                                                       })
 
                                                                       })
@@ -110,15 +113,17 @@ detail_formset_create_judicial_person = modelformset_factory(Detail, fields=(
                                                              widgets={'founder': HiddenInput(),
                                                                       'physical_person': HiddenInput(),
                                                                       'shareholder_company_reg_code': TextInput(
-                                                                          attrs={'style': 'width: 200px',
-                                                                                 'class': 'basicAutoComplete',
+                                                                          attrs={'class': 'basicAutoComplete ml-3 m-1',
                                                                                  'data-url': '/reg_code_autocomplete/',
-                                                                                 'required': 'true'
+                                                                                 'required': 'true',
+                                                                                 'style':'width:300px',
                                                                                  }),
                                                                       'shareholder_company_name': TextInput(
-                                                                          attrs={'style': 'width: 400px',
-                                                                                 'required': 'true'}
-                                                                      )
+                                                                          attrs={'class': 'm-1',
+                                                                                 'required': 'true'}),
+                                                                      'capital': NumberInput(attrs={
+                                                                          'min': '1',
+                                                                          'class': 'm-1'})
                                                                       })
 
 detail_formset_update_judicial_person = modelformset_factory(Detail, fields=(

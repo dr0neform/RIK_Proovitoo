@@ -1,6 +1,6 @@
 import datetime
 
-from django.db.models import Sum, Count
+from django.db.models import Sum
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -9,7 +9,7 @@ from .forms import HeaderForm, detail_formset_create_physical_person, detail_for
     detail_formset_view_physical_person
 
 from .models import Header, Detail
-
+from django.core import serializers
 
 def index(request):
     company_list = Header.objects.order_by('reg_code')
@@ -73,14 +73,15 @@ def create(request):
 
             return HttpResponseRedirect("/detail="+rc)
         else:
-            raise Exception("Some error")
+            print(form1.errors)
     else:
         form1 = HeaderForm()
         form1.fields['create_date'].initial = datetime.date.today()
         formset_p = detail_formset_create_physical_person(queryset=Detail.objects.none(), prefix="create_p")
         formset_j = detail_formset_create_judicial_person(queryset=Detail.objects.none(), prefix="create_j")
-
-    return render(request, 'proovitoo/create.html', {'form1': form1, 'formset_p': formset_p, 'formset_j': formset_j})
+        company_list = Header.objects.all()
+    return render(request, 'proovitoo/create.html', {'form1': form1, 'formset_p': formset_p,
+                                                     'company_list': company_list, 'formset_j': formset_j})
 
 
 def update(request, reg_code):
@@ -127,7 +128,8 @@ def update(request, reg_code):
                     f2.physical_person = False
                     f2.reg_code = c
                     f2.save(c)
-
+            else:
+                print(fcj.errors)
         if company.is_valid():
             c = company.save(commit=False)
             c.search_string = str(c.search_string) + "; " + search_string
@@ -182,3 +184,7 @@ def id_code_autocomplete(request):
         return JsonResponse(json, safe=False)
     else:
         HttpResponse("No cookies")
+
+def companies(request):
+    data = list(Header.objects.values_list('reg_code'))
+    return JsonResponse(data, safe=False)

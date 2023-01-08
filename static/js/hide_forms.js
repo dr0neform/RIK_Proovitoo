@@ -8,6 +8,8 @@
         totalForms_j.setAttribute('value', juridical_forms)
         let physical_elements = document.getElementsByClassName("detail-form-p")
         let juridical_elements = document.getElementsByClassName("detail-form-j")
+            document.getElementById("remove_p").style.display = "none"
+            document.getElementById("remove_j").style.display = "none"
         physical_elements[0].style.display = "none"
         physical_elements[1].style.display = "none"
         physical_elements[2].style.display = "none"

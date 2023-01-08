@@ -13,6 +13,6 @@ urlpatterns = [
     path('update=<str:reg_code>/', views.update, name='update'),
     path('detail=<str:reg_code>/', views.detail, name='detail'),
     path('reg_code_autocomplete/', views.reg_code_autocomplete, name='reg_code_autocomplete'),
-    path('id_code_autocomplete/', views.id_code_autocomplete, name='id_code_autocomplete')
-
+    path('id_code_autocomplete/', views.id_code_autocomplete, name='id_code_autocomplete'),
+    path('companies/', views.companies, name='companies')
 ]
