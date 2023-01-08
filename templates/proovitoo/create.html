@@ -4,24 +4,24 @@
 {% block content %}
 
 <div class="detailheader">
-<h1>Äriühingu asutamine</h1>
+    <h1>Äriühingu asutamine</h1>
 </div>
 <form action="/create/" method="post" id="form-container">
     {% csrf_token %}
-<div class="details">
-<div class="ml-3">
-    <label for="reg_code">Registrikood: </label>
-    {{ form1.reg_code }}
-    <label for="name">Ärinimi: </label>
-    {{ form1.name }}
-    <label for="create_date">Kuupäev: </label>
-    {{ form1.create_date }}
-</div>
-<hr>
+    <div class="details">
+        <div class="ml-3">
+            <label for="reg_code">Registrikood: </label>
+            {{ form1.reg_code }}
+            <label for="name">Ärinimi: </label>
+            {{ form1.name }}
+            <label for="create_date">Kuupäev: </label>
+            {{ form1.create_date }}
+        </div>
+        <hr>
 
-<h3 class="ml-3">Füüsilised osanikud:</h3>
+        <h3 class="ml-3">Füüsilised osanikud:</h3>
 
-<div id="physical" hidden="True" value="0"></div>
+        <div id="physical" hidden="True" value="0"></div>
 
         {{formset_p.management_form}}
         {% for form in formset_p %}
@@ -29,14 +29,14 @@
                 {{form.as_table}}
             </div>
         {% endfor %}
-</br>
-<button id="add-form_p" class="btn btn-primary btn-sm ml-3 mt-3" style="width: 90% height: 90%" type="button"> <i class="bi bi-plus-square"></i></button>
-<button id="remove_p" class="btn btn-danger btn-sm ml-1 mt-3" style="width: 90% height: 90%" type="button"> <i class="bi bi-x-square"></i></button>
-</div>
+        </br>
+        <button id="add-form_p" class="btn btn-primary btn-sm ml-3 mt-3" style="width: 90% height: 90%" type="button"> <i class="bi bi-plus-square"></i></button>
+        <button id="remove_p" class="btn btn-danger btn-sm ml-1 mt-3" style="width: 90% height: 90%" type="button"> <i class="bi bi-x-square"></i></button>
+    </div>
 
-<div class="details">
-<h3 class="ml-3">Juriidilised osanikud:</h3>
-    <div id="juridical" hidden="True" value="0"></div>
+    <div class="details">
+        <h3 class="ml-3">Juriidilised osanikud:</h3>
+        <div id="juridical" hidden="True" value="0"></div>
         {{formset_j.management_form}}
 
         {% for form in formset_j %}
@@ -46,48 +46,45 @@
 
         {% endfor %}
 
-</br>
-    <button id="add-form_j" class="btn btn-primary btn-sm ml-3 mt-3" type="button"><i class="bi bi-plus-square"></i></button>
-    <button id="remove_j" class="btn btn-danger btn-sm ml-1 mt-3" style="width: 90% height: 90%" type="button"> <i class="bi bi-x-square"></i></button>
-</div>
+        </br>
+        <button id="add-form_j" class="btn btn-primary btn-sm ml-3 mt-3" type="button"><i class="bi bi-plus-square"></i></button>
+        <button id="remove_j" class="btn btn-danger btn-sm ml-1 mt-3" style="width: 90% height: 90%" type="button"> <i class="bi bi-x-square"></i></button>
+    </div>
+
     <div class="details ml-4">
         <input type="submit" id="submitButton" hidden = True>
         <input class="btn btn-primary" style="width:100px"  type="button" onclick="validate_create()" value="OK">
         <a class="btn btn-secondary" style="width:100px" href="/index/">Avalehele</a>
     </div>
 
-    </form>
+</form>
 
-    {% load static %}
-    <script src="{% static 'js/split_search_result.js' %}"></script>
-    <script src="{% static 'js/hide_forms.js' %}"></script>
-    <script src="{% static 'js/validate_create.js' %}"></script>
-    <script src="{% static 'js/control_forms.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.js"></script>
+{% load static %}
+<script src="{% static 'js/split_search_result.js' %}"></script>
+<script src="{% static 'js/hide_forms.js' %}"></script>
+<script src="{% static 'js/validate_create.js' %}"></script>
+<script src="{% static 'js/control_forms.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.js"></script>
 
-    <script>
-        $('.basicAutoComplete').autoComplete(
-            {minLength: 1,
-            noResultsText:"Ei leidnud ühtegi vastet"}
-        );
+<script>
+    $('.basicAutoComplete').autoComplete(
+        {minLength: 1,
+        noResultsText:"Ei leidnud ühtegi vastet"});
         $('.dropdown-menu').css({'top': 'auto', 'left': 'auto'})
         console.log()
-    </script>
+</script>
 
-
-  <script>
-        $.ajax({
-    url: '/companies/',
-    type: "GET",
-    dataType: "text",
-    success: (data) => {
-        window.cl = data;
-    },
-    error: (error) => {
-        console.log(error);
-    }
+<script>
+    $.ajax({
+        url: '/companies/',
+        type: "GET",
+        dataType: "text",
+        success: (data) => {
+            window.cl = data;},
+        error: (error) => {
+            console.log(error);}
     });
-  </script>
+</script>
 
 
 {% endblock %}
