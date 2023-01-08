@@ -1,44 +1,43 @@
 {% extends "proovitoo/base.html" %}
 {% block content %}
 
-    <div class="detailheader p-4">
-        <h1>{{ company.name }} - {{ company.reg_code }}</h1>
-           <div>
-           <h3>Osakapital: <span id="total_capital">{{ share_capital }}<span></h3>
-               </div>
+<div class="detailheader p-4">
+    <h1>{{ company.name }} - {{ company.reg_code }}</h1>
 
+    <div>
+        <h3>Osakapital: <span id="total_capital">{{ share_capital }}</span></h3>
+    </div>
+</div>
 
-       </div>
-   </div>
+<hr>
 
-    <hr>
-
-    <div class ="details">
+<div class ="details">
     <h3>Osanikud:</h3>
-<table class="table table-bordered m-4" style="width:95%"">
-<tr>
-    <th>Osalus</th>
-    <th>Isikukood/Registrikood</th>
-    <th>Nimi</th>
-    <th>Osakapital</th>
-    <th>Asutaja</th>
-</tr>
-    {% for det in detail_p %}
+    <table class="table table-bordered m-4" style="width:95%">
         <tr>
-        <td class="share_percent">15%</td>
-            <td>{{ det.id_code.value }}</td>
-            <td>{{ det.shareholder_first_name.value }} {{ det.shareholder_last_name.value }}</td>
-            <td class ="capital">{{ det.capital.value }}</td>
-            {% if det.founder.value %}
-                <td>Jah</td>
-            {% else %}
-                <td>Ei</td>
-            {% endif %}
+        <th>Osalus</th>
+        <th>Isikukood/Registrikood</th>
+        <th>Nimi</th>
+        <th>Osakapital</th>
+        <th>Asutaja</th>
         </tr>
+        {% for det in detail_p %}
+            <tr>
+                <td class="share_percent">15%</td>
+                <td>{{ det.id_code.value }}</td>
+                <td>{{ det.shareholder_first_name.value }} {{ det.shareholder_last_name.value }}</td>
+                <td class ="capital">{{ det.capital.value }}</td>
+                {% if det.founder.value %}
+                    <td>Jah</td>
+                {% else %}
+                    <td>Ei</td>
+                {% endif %}
+            </tr>
         {% endfor %}
+
         {% for det in detail_j %}
         <tr>
-        <td class="share_percent">15%</td>
+            <td class="share_percent">15%</td>
             <td>{{ det.shareholder_company_reg_code.value }}</td>
             <td><a href="/detail={{ det.shareholder_company_reg_code.value }}/">{{ det.shareholder_company_name.value }}</a></td>
             <td class="capital">{{ det.capital.value }}</td>
@@ -49,14 +48,16 @@
             {% endif %}
         </tr>
         {% endfor %}
-</table>
+    </table>
 
-        <div class="p-4">
-       <a href="/update={{ company.reg_code }}/" class="btn btn-primary m-1">
-                <i class="bi bi-pencil-square"></i>  Muuda osanikke</a>
+    <div class="p-4">
+        <a href="/update={{ company.reg_code }}/" class="btn btn-primary m-1">
+            <i class="bi bi-pencil-square"></i>  Muuda osanikke</a>
         <a class="btn btn-secondary" style="width:100px" href="/index/">Avalehele</a>
     </div>
 </div>
-        {% load static %}
-    <script src="{% static 'js/calculate_percentages.js' %}"></script>
+
+{% load static %}
+<script src="{% static 'js/calculate_percentages.js' %}"></script>
+
 {% endblock %}
