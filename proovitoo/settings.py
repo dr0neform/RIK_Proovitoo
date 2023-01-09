@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'proovitoodb',
         'USER': 'root',
-        'PASSWORD': 'SadaTuhat'
+        'PASSWORD': ''
     }
 }
 
